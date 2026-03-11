@@ -16,7 +16,7 @@
 
     <br>
 
-    <div class="bg-linear-to-r from-blue-300 to-blue-200 m-1 p-2 rounded-l-2xl">
+    <div class="bg-linear-to-r from-blue-300 to-blue-200 m-1 p-2 border rounded-l-2xl">
         <p class="text-center">This my local web it's collect all my prograssion for this year about full stack and after this is a 
         few statement for descrbe, my dream, goals and something else. <br>
         " in middle of January 2026 i want to have more and more skill, i love language such as china, japan,
@@ -32,7 +32,7 @@
 
     <div>
         <h1 class="text-3xl text-center font-bold underline">AboutText</h1>
-        <div class="bg-linear-to-l from-red-300 to-pink-100 m-1 p-2 rounded-2xl">
+        <div class="bg-linear-to-l from-red-300 to-pink-100 m-1 p-2 border rounded-2xl">
             <p class="text-2xl underline">Color and upper, lower, capital</p>
             <div class="text-sm uppercase">Hello Jame</div>
             <div class="text-base lowercase">Hello Jame</div>
@@ -43,7 +43,7 @@
         
         <br>
 
-        <div class="bg-linear-to-l from-green-300 to-green-100 m-1 p-2 rounded-2xl">
+        <div class="bg-linear-to-l from-green-300 to-green-100 m-1 p-2 border rounded-2xl">
             <p class="text-bold text-3xl underline"> weight</p>
             <div class="font-thin">Hello Thananon 1</div>
             <div class="font-extralight">Hello Thananon 2</div>
@@ -70,7 +70,7 @@
         <p class="text-3xl font-bold underline text-center">About Margin and Padding</p>
         <p class="text-center">Margin is space between element</p>
         <p class="text-center"> Padding is space inside element</p>
-        <div class="bg-purple-300 m-1 p-2 rounded-l-2xl">
+        <div class="bg-purple-300 m-1 p-2 border rounded-l-2xl">
             <button class="bg-green-200 h-7 m-5">Box1</button>
             <button class="bg-green-200 h-7 m-5">Box 2</button>
             <button class="bg-green-200 h-7 bg-black m-5">Box 3</button>
@@ -82,7 +82,7 @@
 
         <div>
             <p class="text-3xl font-bold underline text-center">About Border</p>
-            <div class="bg-blue-300 p-4 m-1 p-2 rounded-r-2xl">
+            <div class="bg-blue-300 p-4 m-1 p-2 border rounded-r-2xl">
                 <button class="bg-red-200 w-15 h-10 m-2 border-1 rounded-t-md border-none">Box 1</button>
                 <button class="bg-red-200 w-15 h-10 m-2 border-2 rounded-sm border-solid">Box 2</button>
                 <button class="bg-red-200 w-15 h-10 m-2 border-3 rounded-lg border-dashed">Box 3</button>
@@ -96,10 +96,40 @@
 
         <div>
             <p class="text-3xl text-center font-bold underline">About Shadow</p>
-            <div class="bg-white m-1 p-2 shadow-10xl">
+            <div class="bg-white m-1 p-2 border rounded">
                 <button class="bg-linear-to-t from-blue-400 to-green-200 m-5 p-5 rounded-2xl shadow-10xl">BOX ONE</button>
                 <button class="bg-linear-to-t from-blue-400 to-green-200 m-5 p-5 rounded-2xl">BOX TWO</button>
                 <button class="bg-white m-5 p-5 border rounded-2xl shadow-2xl">BOX TWO</button>
+            </div>
+        </div>
+
+        <br>
+
+        <div>
+            <p class="text-3xl text-center font-bold underline">About Pseudo Selector</p>
+            <div class="bg-green-200 m-1 p-3 border rounded">
+                <input type="text" placeholder="Type Something" class="bg-linear-to-l from-red-200 to-yellow-200 focus:bg-linear-to-r from-red-200 to-yellow-200 m-3 border">
+                <button class="bg-linear-to-l from-purple-300 to-blue-300 text-center hover:bg-linear-to-r from-purple-300 to-blue-300 w-15 h-10 m-3 border">Sent</button>
+
+                <br>
+
+                <input type="text" placeholder="Type Something" class="bg-red-200 focus:bg-yellow-200 m-3 border">
+                <button class="bg-purple-300 hover:bg-linear-to-r from-purple-300 to-blue-300 w-15 h-10 m-3 border">Sent</button>
+                <p class="text-2xl underline ml-3">Note: must be exacly same structure, <br>now i know only <"input"> in this case.</p>
+            </div>
+        </div>
+
+        <br>
+
+        <div>
+            <p class="text-3xl text-center font-bold underline">About Container & Breakkpoint</p>
+            <p class="text-lg text-center">Responsive Web Design: computer screen, ipad screen, mobile screen</p>
+            <p class="text-lg text-center">Container: for collect element</p>
+            <p class="text-lg text-center">Container: for collect screen size; sm=640, md=768, lg=1024, xl=1280, 2xl=1536</p>
+            <div class="bg-linear-to-l from-yellow-200 to-white m-1 p-3 border">
+                <div class="container bg-red-300 mx-auto">
+                    <h1 class="text-3xl sm:text-red-300 md:text-black">Heading</h1>
+                </div>
             </div>
         </div>
     </div>
