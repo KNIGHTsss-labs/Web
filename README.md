@@ -21,9 +21,9 @@ Date
 - deadline 22/05/2026
 
 Side Task
-- 10 - 11 April : SQLBolt with https://sqlbolt.com/
-- 12 April : Mosh SQL https://youtu.be/7S_tz1z_5bA?si=PBs0hEsQ_G4QyGWV
-- 13 - 14 April : Buiid a tiny CRUD app with SQLLite + Node.js(No Frontend)
-- 15 - 16 April : Swap to PostgreSQL, Connect to main project (tOdO APp)
+- SQLBolt with https://sqlbolt.com/
+- Mosh SQL https://youtu.be/7S_tz1z_5bA?si=PBs0hEsQ_G4QyGWV
+- Buiid a tiny CRUD app with SQLLite + Node.js(No Frontend)
+- Swap to PostgreSQL, Connect to main project (tOdO APp)
 
 </h1>
