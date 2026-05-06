@@ -24,7 +24,3 @@ Desktop.ini
 .idea/
 *.swp
 *.bak
-
-# i don't know but, maybe it should
-package-lock.json
-package.json
