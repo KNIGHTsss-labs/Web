@@ -32,6 +32,7 @@ export default function TodoPage() {
     const [deleteTitle, setDeleteTitle] = useState('')
     const [newDueDate, setNewDueDate] = useState('')
     const [newPriority, setNewPriority] = useState('medium')
+    const [search, setSearch] = useState('')
 
     async function fetchTasks() {
         try {
@@ -101,9 +102,13 @@ export default function TodoPage() {
         localStorage.removeItem('token'); navigate('/login')
     }
 
-    const filtered = tasks.filter(t =>
-        filter === 'active' ? !t.is_completed : filter === 'done' ? t.is_completed : true
-    )
+    const filtered = tasks
+        .filter(t =>
+            filter === 'active' ? !t.is_completed : filter === 'done' ? t.is_completed : true
+        )
+        .filter(t =>
+            search.trim() === '' ? true : t.title.toLowerCase().includes(search.toLowerCase())
+        )
     const doneCount = tasks.filter(t => t.is_completed).length
 
     // ── Styles ────────────────────────────────────────────────────────────
@@ -193,6 +198,57 @@ export default function TodoPage() {
                         <button onClick={() => setError('')} style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', padding: 0 }}>✕</button>
                     </div>
                 )}
+
+                {/* Search bar */}
+                <div style={{ position: 'relative', marginBottom: '16px' }}>
+                    <span style={{
+                        position: 'absolute',
+                        left: '14px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        fontSize: '14px',
+                        color: '#3a3a5a',
+                    }}>
+                        🔍
+                    </span>
+                    <input
+                        type="text"
+                        placeholder="Search tasks..."
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
+                        style={{
+                            width: '100%',
+                            background: '#13131a',
+                            color: '#d4d4f0',
+                            border: '1px solid rgba(255,255,255,0.06)',
+                            borderRadius: '12px',
+                            padding: '10px 14px 10px 38px',
+                            fontSize: '14px',
+                            outline: 'none',
+                            boxSizing: 'border-box' as const,
+                        }}
+                    />
+                    {/* Clear button — only shows when typing */}
+                    {search && (
+                        <button
+                            onClick={() => setSearch('')}
+                            style={{
+                                position: 'absolute',
+                                right: '12px',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                background: 'none',
+                                border: 'none',
+                                color: '#3a3a5a',
+                                cursor: 'pointer',
+                                fontSize: '14px',
+                                padding: 0,
+                            }}
+                        >
+                            ✕
+                        </button>
+                    )}
+                </div>
 
                 {/* Add task */}
                 <div style={{ ...card, marginBottom: '16px' }}>
@@ -285,7 +341,10 @@ export default function TodoPage() {
                     <Spinner />
                 ) : filtered.length === 0 ? (
                     <p style={{ textAlign: 'center', color: '#3a3a5a', fontSize: '14px', padding: '60px 0' }}>
-                        {filter === 'all' ? 'No tasks yet. Add one above!' : `No ${filter} tasks.`}
+                        {search
+                            ? `No tasks matching "${search}"`
+                            : filter === 'all' ? 'No tasks yet. Add one above!' : `No ${filter} tasks.`
+                        }
                     </p>
                 ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
