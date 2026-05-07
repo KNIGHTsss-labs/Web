@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../components/Spinner'
 import ConfirmModal from '../components/ConfirmModal'
+// import { SparkleTrail } from '../components/SparkleTrail'
 import { getTasksApi, createTaskApi, updateTaskApi, toggleTaskApi, deleteTaskApi } from '../services/api'
 
 interface Task {
@@ -10,6 +11,8 @@ interface Task {
     description: string | null
     is_completed: boolean
     created_at: string
+    due_date: string | null
+    priority: string | null
 }
 
 export default function TodoPage() {
@@ -27,11 +30,8 @@ export default function TodoPage() {
     const [username, setUsername] = useState('')
     const [deleteId, setDeleteId] = useState<number | null>(null)
     const [deleteTitle, setDeleteTitle] = useState('')
-
-    useEffect(() => {
-        if (!localStorage.getItem('token')) { navigate('/login'); return }
-        fetchTasks()
-    }, [])
+    const [newDueDate, setNewDueDate] = useState('')
+    const [newPriority, setNewPriority] = useState('medium')
 
     async function fetchTasks() {
         try {
@@ -56,11 +56,15 @@ export default function TodoPage() {
 
     async function handleCreate() {
         if (!newTitle.trim()) return
+        console.log('Priiority begin sent:', newPriority)
         try {
             setAdding(true)
-            const task = await createTaskApi(newTitle, newDesc)
+            const task = await createTaskApi(newTitle, newDesc, newDueDate || undefined, newPriority)
             setTasks(prev => [task, ...prev])
-            setNewTitle(''); setNewDesc('')
+            setNewTitle('')
+            setNewDesc('')
+            setNewDueDate('')
+            setNewPriority('medium')
         } catch { setError('สร้าง task ไม่สำเร็จ') }
         finally { setAdding(false) }
     }
@@ -146,6 +150,7 @@ export default function TodoPage() {
 
     return (
         <div style={page}>
+            {/* <SparkleTrail/> */}
             <div style={inner}>
 
                 {/* Header */}
@@ -207,6 +212,44 @@ export default function TodoPage() {
                         onChange={e => setNewDesc(e.target.value)}
                         onKeyDown={e => e.key === 'Enter' && handleCreate()}
                     />
+                    <input
+                        style={{ ...inputStyle, marginBottom: '12px', colorScheme: 'dark' }}
+                        type="date"
+                        value={newDueDate}
+                        onChange={e => setNewDueDate(e.target.value)}
+                    />
+
+                {/* Priority picker */}
+                <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+                    {(['low', 'medium', 'high'] as const).map(p => (
+                        <button
+                            type="button"
+                            key={p}
+                            onClick={() => setNewPriority(p)}
+                            style={{
+                                flex: 1,
+                                padding: '8px',
+                                borderRadius: '10px',
+                                fontSize: '12px',
+                                fontWeight: 500,
+                                cursor: 'pointer',
+                                textTransform: 'capitalize',
+                                border: newPriority === p
+                                    ? `1px solid ${p === 'high' ? '#f87171' : p === 'medium' ? '#fb923c' : '#4ade80'}`
+                                    : '1px solid rgba(255,255,255,0.06)',
+                                background: newPriority === p
+                                    ? p === 'high' ? 'rgba(248,113,113,0.1)' : p === 'medium' ? 'rgba(251,146,60,0.1)' : 'rgba(74,222,128,0.1)'
+                                    : '#0a0a0f',
+                                color: newPriority === p
+                                    ? p === 'high' ? '#f87171' : p === 'medium' ? '#fb923c' : '#4ade80'
+                                    : '#3a3a5a',
+                            }}
+                        >
+                            {p === 'high' ? '🔴' : p === 'medium' ? '🟠' : '🟢'} {p}
+                        </button>
+                    ))}
+
+                </div>
                     <button
                         style={{ ...btnPrimary, opacity: adding || !newTitle.trim() ? 0.4 : 1 }}
                         onClick={handleCreate}
@@ -315,6 +358,44 @@ export default function TodoPage() {
                                             {task.description && (
                                                 <p style={{ margin: '3px 0 0', fontSize: '12px', color: '#3a3a5a' }}>
                                                     {task.description}
+                                                </p>
+                                            )}
+
+                                        {/* Priority badge */}
+                                        <span style={{
+                                            display: 'inline-block',
+                                            fontSize: '10px',
+                                            fontWeight: 600,
+                                            padding: '2px 8px',
+                                            borderRadius: '99px',
+                                            marginTop: '4px',
+                                            textTransform: 'capitalize',
+                                            background: task.priority === 'high' ? 'rgba(248,113,113,0.1)'
+                                                : task.priority === 'low' ? 'rgba(74,222,128,0.1)'
+                                                : 'rgba(251,146,60,0.1)',
+                                            color: task.priority === 'high' ? '#f87171'
+                                                : task.priority === 'low' ? '#4ade80'
+                                                : '#fb923c',
+                                            border: `1px solid ${task.priority === 'high' ? 'rgba(248,113,113,0.2)'
+                                                : task.priority === 'low' ? 'rgba(74,222,128,0.2)'
+                                                : 'rgba(251,146,60,0.2)'}`,
+                                        }}>
+                                            {task.priority === 'high' ? '🔴' : task.priority === 'low' ? '🟢' : '🟠'} {task.priority || 'medium'}
+                                        </span>
+                                            {task.due_date && (
+                                                <p style={{
+                                                    margin: '4px 0 0',
+                                                    fontSize: '11px',
+                                                    color: new Date(task.due_date) < new Date() && !task.is_completed
+                                                        ? '#f87171'   // red if overdue
+                                                        : '#3a3a5a',  // gray if fine
+                                                }}>
+                                                    📅 {new Date(task.due_date).toLocaleDateString('th-TH', {
+                                                        day: 'numeric',
+                                                        month: 'short',
+                                                        year: 'numeric'
+                                                    })}
+                                                    {new Date(task.due_date) < new Date() && !task.is_completed && ' · overdue'}
                                                 </p>
                                             )}
                                         </div>

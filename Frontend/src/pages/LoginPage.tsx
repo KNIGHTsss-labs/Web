@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { loginApi, registerApi } from '../services/api'
+// import { SparkleTrail } from '../components/SparkleTrail'
 
 export default function LoginPage() {
     const [mode, setMode]         = useState<'login' | 'register'>('login')
@@ -137,6 +138,7 @@ export default function LoginPage() {
 
     return (
         <div style={s.page}>
+            {/* <SparkleTrail/> */}
             <div style={s.wrap}>
                 <div style={{ textAlign: 'center' }}>
                     <span style={s.badge}>Todo App</span>

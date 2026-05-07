@@ -36,11 +36,11 @@ export async function getTasksApi() {
     return res.json()
 }
 
-export async function createTaskApi(title: string, description: string) {
+export async function createTaskApi(title: string, description: string, due_date?: string, priority?: string) {
     const res = await fetch(`${BASE_URL}/tasks`, {
         method: 'POST',
         headers: authHeaders(),
-        body: JSON.stringify({ title, description })
+        body: JSON.stringify({ title, description, due_date, priority })
     })
     return res.json()
 }

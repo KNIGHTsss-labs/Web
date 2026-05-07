@@ -53,7 +53,8 @@ app.get('/tasks', authenticate, async (req: any, res: Response) => {
 
 // C : Create
 app.post('/tasks', authenticate, async (req: any, res: Response) => {
-    const { title, description, due_date } = req.body;
+    const { title, description, due_date, priority } = req.body;
+    console.log('PRIORITY RECEIVED: ', priority)
     if (!title) return res.status(400).json({ error: 'กรุณาใส่ชื่อ task' });
 
     try{
@@ -62,6 +63,7 @@ app.post('/tasks', authenticate, async (req: any, res: Response) => {
                 title,
                 description: description || null,
                 due_date: due_date ? new Date(due_date) : null,
+                priority: priority || 'medium',
                 user_id: req.user.id
             }
         });
@@ -75,7 +77,7 @@ app.post('/tasks', authenticate, async (req: any, res: Response) => {
 // U : Update, put
 app.put('/tasks/:id', authenticate, async (req: any, res: Response) => {
     const id = parseInt(req.params.id);
-    const { title, description, is_completed, due_date } = req.body;
+    const { title, description, is_completed, due_date, priority } = req.body;
 
     try{
         const task = await prisma.tasks.findFirst({
@@ -90,6 +92,7 @@ app.put('/tasks/:id', authenticate, async (req: any, res: Response) => {
                 ...(description !== undefined && { description }),
                 ...(is_completed !== undefined && { is_completed }),
                 ...(due_date !== undefined && { due_date: due_date ? new Date(due_date) : null }),
+                ...(priority !== undefined && { priority }),
             }
         });
         res.json(update);
