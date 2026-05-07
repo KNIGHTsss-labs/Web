@@ -20,6 +20,7 @@ app.use(express.json());
 
 const port = 3000;
 
+// ─── AUTH ─────────────────────────────────────
 const authenticate = (req: any, res: Response, next: Function) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader?.split(' ')[1];
@@ -36,6 +37,7 @@ const authenticate = (req: any, res: Response, next: Function) => {
     }
 };
 
+// ─── TASKs ─────────────────────────────────────
 // R : Read
 app.get('/tasks', authenticate, async (req: any, res: Response) => {
     try{
@@ -51,7 +53,7 @@ app.get('/tasks', authenticate, async (req: any, res: Response) => {
 
 // C : Create
 app.post('/tasks', authenticate, async (req: any, res: Response) => {
-    const { title, description } = req.body;
+    const { title, description, due_date } = req.body;
     if (!title) return res.status(400).json({ error: 'กรุณาใส่ชื่อ task' });
 
     try{
@@ -59,19 +61,21 @@ app.post('/tasks', authenticate, async (req: any, res: Response) => {
             data: {
                 title,
                 description: description || null,
+                due_date: due_date ? new Date(due_date) : null,
                 user_id: req.user.id
             }
         });
         res.status(201).json(task)
     } catch (error){
-        res.status(500).json({ error: 'สร้าง task ไม่สำเร็จ'});
+        console.error('CREATE TASK ERROR:',error)
+        res.status(500).json({ error: error});
     }
 });
 
 // U : Update, put
 app.put('/tasks/:id', authenticate, async (req: any, res: Response) => {
     const id = parseInt(req.params.id);
-    const { title, description, is_completed } = req.body;
+    const { title, description, is_completed, due_date } = req.body;
 
     try{
         const task = await prisma.tasks.findFirst({
@@ -85,6 +89,7 @@ app.put('/tasks/:id', authenticate, async (req: any, res: Response) => {
                 ...(title !== undefined && { title }),
                 ...(description !== undefined && { description }),
                 ...(is_completed !== undefined && { is_completed }),
+                ...(due_date !== undefined && { due_date: due_date ? new Date(due_date) : null }),
             }
         });
         res.json(update);
