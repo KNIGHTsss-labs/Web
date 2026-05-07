@@ -201,7 +201,7 @@ app.post('/register', async (req, res) => {
         res.json({ message: "สมัครสมาชิกสำเร็จ!" });
     } catch (error) {
         console.error('REGISTER ERROR:', error)
-        res.status(500).json({ error: String(error) });
+        res.status(500).json({ error: 'ลงทะเบียนใช้งานระบบไม่สำเร็จ\nความเป็นไปได้\n1.Email นี้ถูกใช้งานแล้ว' });
     }
 });
 
@@ -231,6 +231,7 @@ app.post('/login', async (req, res) => {
         res.status(401).json({ error: "รหัสผ่านไม่ถูกต้อง" });
     }
     } catch (error) {
+        console.error('LOGIN ERROR', error)
         res.status(500).json({ error: "เข้าสู่ระบบไม่สำเร็จ" });
     }
 });
