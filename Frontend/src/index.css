@@ -6,8 +6,11 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   min-height: 100vh;
+  min-height: 100dvh;
+  background: #0a0a0f;  /* ← prevents white flash */
+  font-family: 'DM Sans', system-ui, sans-serif;
 }
 
 /* KEEP_IN_SYNC(fullscreen/resources/figmake/shadcn/globals.css) */

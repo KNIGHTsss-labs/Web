@@ -1,4 +1,4 @@
-# Summary of threats
+Summary of threats
 Brute force attack    → rate limiting ✅
 Weird input           → input validation ✅
 Weak JWT secret       → strong random secret ✅
@@ -6,7 +6,7 @@ No HTTPS              → deploy to Render/Vercel
 Open CORS             → restrict to your domain
 Token after logout    → token blacklist (advanced)
 
-# Full summary — everything you learned
+Full summary — everything you learned
 Phase 1 — Understanding the architecture
     Frontend (React) ↔ Backend (Express) ↔ Database (PostgreSQL)
     learned: how the 3 layers connect and why they're separate ✅
@@ -60,3 +60,10 @@ Phase 6 — Polish & Features
         → Prisma migrations (db push + generate) ✅
         → Filtering arrays in React
         → Props — passing data between components
+
+-------------------------------------------------------
+Ubantu server 
+ - version : Ubantu 26.04
+ - RAM : 4, Cors : 2, Storage : 4096 MB
+ 
+ - ssh keys
