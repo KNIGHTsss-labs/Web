@@ -65,5 +65,14 @@ Phase 6 — Polish & Features
 Ubantu server 
  - version : Ubantu 26.04
  - RAM : 4, Cors : 2, Storage : 4096 MB
- 
- - ssh keys
+
+All concept
+    that i'm already understanding
+
+# About Network
+ - NAT
+ - Bridged Adpater
+
+# About Security 
+ - ssh keys (private/public key)
+ - 
