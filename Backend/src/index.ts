@@ -21,7 +21,7 @@ const app = express();
 app.use(cors()); // allows all website to call your API
 app.use(express.json());
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
