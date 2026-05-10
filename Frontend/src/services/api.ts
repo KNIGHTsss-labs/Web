@@ -1,4 +1,5 @@
-const BASE_URL = 'http://localhost:3000'
+// const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'https://todo-backend-xqyn.onrender.com'
 
 // helper — reads token from localStorage and puts it in the header
 function authHeaders() {
