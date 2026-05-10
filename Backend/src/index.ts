@@ -15,8 +15,8 @@ import rateLimit from 'express-rate-limit'
 process.env.DATABASE_URL = process.env.DATABASE_URL ?? ''
 
 const JWT_SECRET = process.env.JWT_SECRET!
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! as String})
-const prisma = new PrismaClient({ adapter });
+// const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! as String})
+const prisma = new PrismaClient(); //{ adapter }
 
 const app = express();
 app.use(cors()); // allows all website to call your API
